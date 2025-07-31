@@ -1,0 +1,24 @@
+
+/* Google Font for Arcade Look */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Basic Setup and Background */
+body {
+    background-color: #fdf6e3;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 2rem;
+    box-sizing: border-box;
+    color: #c76a3a;
+}
+
+#root {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,215 @@
+/* CHANGE: 'Comfortaa' font import kiya spinner numbers ke liye aur 'Press Start 2P' main font ke liye rakha */
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Basic Setup and Background */
+body {
+    background-color: #fdf6e3;
+    /* CHANGE: Main font ko wapas original 'Press Start 2P' kar diya */
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 2rem;
+    box-sizing: border-box;
+    color: #c76a3a;
+}
+
+#root {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Main App Container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+}
+
+/* Title Styling */
+.main-title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    text-shadow: 3px 3px 0px #8a4a27;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Spinner Wheel Styling */
+.spinner-container {
+    position: relative;
+    width: 340px;
+    height: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-frame {
+    width: 340px;
+    height: 340px;
+    background: #2c3e50; /* Outer black strip */
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.spinner-red-layer {
+    width: 320px;
+    height: 320px;
+    background: #c0392b; /* Inner red strip */
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.stud {
+    position: absolute;
+    width: 10px; /* Chote dots */
+    height: 10px;
+    background: #f1c40f;
+    border-radius: 50%;
+    border: 1px solid #333;
+    z-index: 20;
+}
+
+.spinner-pointer {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 30px solid #c0392b;
+    position: absolute;
+    top: -5px;
+    z-index: 25;
+    filter: drop-shadow(0px -2px 1px rgba(0,0,0,0.3));
+}
+
+.spinner-wheel {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    transition: transform 10s cubic-bezier(0.25, 1, 0.5, 1);
+    background: conic-gradient(
+        #ff4757 0deg 40deg,
+        #ff7f50 40deg 80deg,
+        #ffa502 80deg 120deg,
+        #2ed573 120deg 160deg,
+        #1e90ff 160deg 200deg,
+        #3742fa 200deg 240deg,
+        #8e44ad 240deg 280deg,
+        #ff6b81 280deg 320deg,
+        #feca57 320deg 360deg
+    );
+    border: 3px solid #2c3e50;
+}
+
+/* Values ko position karne ke liye container */
+.value-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* CHANGE: Spinner ke text ke liye naya font aur size set kiya */
+.value-text {
+    position: absolute;
+    color: white;
+    font-family: 'Comfortaa', cursive; /* Naya curvy font apply kiya */
+    font-size: 20px; /* Font size thoda badhaya for better readability */
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Shadow ko thoda subtle kiya */
+}
+
+/* Span ke andar ke characters ko vertical stack karne ke liye */
+.value-text span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1; /* CHANGE: Line height adjust ki naye font ke liye */
+}
+
+.center-spin-button {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #ffd700, #f1c40f);
+    border-radius: 50%;
+    border: 5px solid #2c3e50;
+    cursor: pointer;
+    z-index: 15;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.4), 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.1s ease;
+}
+
+.center-spin-button:active {
+    transform: scale(0.95);
+}
+
+/* Winner Number Blocks Styling */
+.winner-blocks-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    perspective: 1000px;
+}
+
+.cube {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(-30deg);
+    transition: transform 0.5s;
+}
+.cube:hover {
+    transform: rotateX(-10deg) rotateY(-20deg);
+}
+
+.cube-face {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    color: #f1c40f;
+    border: 3px solid #f1c40f;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    border-radius: 12px;
+}
+
+.front {
+    background-color: #16a085;
+    transform: translateZ(30px);
+}
+.top {
+    background-color: #1abc9c;
+    transform: rotateX(90deg) translateZ(30px);
+}
+.left {
+    background-color: #1abc9c;
+    transform: rotateY(-90deg) translateZ(30px);
+}
+.right {
+    background-color: #1abc9c;
+    transform: rotateY(90deg) translateZ(30px);
+}
