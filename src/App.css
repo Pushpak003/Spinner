@@ -103,7 +103,7 @@ body {
     border-radius: 50%;
     position: relative;
     overflow: hidden;
-    transition: transform 10s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 10s cubic-bezier(0.1, 0.9, 0.2, 1);
     background: conic-gradient(
         #ff4757 0deg 40deg,
         #ff7f50 40deg 80deg,
