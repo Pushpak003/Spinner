@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import './App.css';
+import logo from './assets/logo.jpeg';
 
 const AMOUNTS = [2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800];
 // CHANGE: Winner ID ko 7 se 3 characters ka kar diya hai
@@ -107,7 +108,11 @@ function App() {
                         </div>
                     </div>
                 </div>
-                <div className="center-spin-button" onClick={spinWheel}></div>
+                <div className="center-spin-button" 
+                    onClick={spinWheel}
+                    // STEP 3.2: Background image ko yahan 'style' se dena hai
+                    style={{ backgroundImage: `url(${logo})` }}
+></div>
             </div>
             
             <h1 className="main-title">WINNER NUMBER</h1>
