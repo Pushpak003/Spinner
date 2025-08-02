@@ -3,9 +3,8 @@ import './App.css';
 import logo from './assets/logo.jpeg';
 
 // Data lists
-const DIGITS_FOR_FIRST_CUBE = ['0', '1', '2']; // Pehle cube ke liye
-const ALL_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']; // Baaki cubes ke liye
-const SPINNER_AMOUNTS = [2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800];
+const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const SPINNER_AMOUNTS = [2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900];
 const FINAL_SLOT_RESULT = ['0', '4', '7'];
 
 function App() {
@@ -35,29 +34,31 @@ function App() {
     const spin = () => {
         if (isSpinning) return;
 
-        // --- YAHAN CHANGE HUA HAI ---
+        // --- CHANGE START ---
+        // Yahan logic update kiya hai
         FINAL_SLOT_RESULT.forEach((_, index) => {
             intervalIds.current[index] = setInterval(() => {
-                // Check karenge ki kaunsa cube hai
+                let randomDigit;
+                
+                // Agar pehla cube hai (index === 0), to sirf 0, 1, 2 use karo
                 if (index === 0) {
-                    // Agar pehla cube hai, to sirf 0, 1, 2 me se random number aayega
-                    const randomIndex = Math.floor(Math.random() * DIGITS_FOR_FIRST_CUBE.length);
-                    setDisplayNumbers(prev => {
-                        const newNumbers = [...prev];
-                        newNumbers[index] = DIGITS_FOR_FIRST_CUBE[randomIndex];
-                        return newNumbers;
-                    });
+                    const firstCubeDigits = ['0', '1', '2'];
+                    const randomIndex = Math.floor(Math.random() * firstCubeDigits.length);
+                    randomDigit = firstCubeDigits[randomIndex];
                 } else {
-                    // Agar doosra ya teesra cube hai, to saare digits me se random number aayega
-                    const randomIndex = Math.floor(Math.random() * ALL_DIGITS.length);
-                    setDisplayNumbers(prev => {
-                        const newNumbers = [...prev];
-                        newNumbers[index] = ALL_DIGITS[randomIndex];
-                        return newNumbers;
-                    });
+                    // Baaki cubes ke liye sabhi digits (0-9) use karo
+                    const randomIndex = Math.floor(Math.random() * DIGITS.length);
+                    randomDigit = DIGITS[randomIndex];
                 }
+                
+                setDisplayNumbers(prev => {
+                    const newNumbers = [...prev];
+                    newNumbers[index] = randomDigit;
+                    return newNumbers;
+                });
             }, 100);
         });
+        // --- CHANGE END ---
         
         setIsSpinning(true);
         const targetAmount = 2100;
@@ -80,7 +81,7 @@ function App() {
         return Array.from({ length: numStuds }).map((_, index) => {
             const angle = (index / numStuds) * 2 * Math.PI;
             const x = layerCenter + studRadius * Math.cos(angle);
-            const y = layerCenter + studRadius * `Math.sin(angle)`;
+            const y = layerCenter + studRadius * Math.sin(angle);
             return <div key={index} className="stud" style={{ top: `${y - 5}px`, left: `${x - 5}px` }} />;
         });
     }, []);
@@ -88,7 +89,7 @@ function App() {
     const values = useMemo(() => {
         const numValues = SPINNER_AMOUNTS.length;
         const wheelCenter = 150;
-        const textRadius = 80;
+        const textRadius = 95; // Yeh value humne pehle change ki thi
         return SPINNER_AMOUNTS.map((amount, index) => {
             const segmentAngle = 360 / numValues;
             const startAngle = index * segmentAngle;
