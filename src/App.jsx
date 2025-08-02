@@ -5,7 +5,7 @@ import logo from './assets/logo.jpeg';
 // Data lists
 const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 const SPINNER_AMOUNTS = [2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900];
-const FINAL_SLOT_RESULT = ['0', '4', '7'];
+const FINAL_SLOT_RESULT = ['0', '5', '7'];
 
 function App() {
     const [rotation, setRotation] = useState(0);
