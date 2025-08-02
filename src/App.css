@@ -1,19 +1,16 @@
-/* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-/* --- FIX FOR SCROLLING START --- */
+
+/* --- NAYI SPACE THEME with GRADIENT & MORE STARS --- */
 body {
     /* Naya Gradient Background: dark blue se black */
     background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
     color: #c9d1d9;
-    /* height ko min-height se badal diya taaki content badhne par body grow kar sake */
-    min-height: 100vh;
-    /* overflow: hidden hata diya aur overflow-x: hidden laga diya taaki vertical scroll ho sake */
-    overflow-x: hidden;
+    height: 100vh; /* Gradient ke liye height zaroori hai */
+    overflow: hidden; /* Taaki stars screen se bahar na jaayein */
 }
-/* --- FIX FOR SCROLLING END --- */
 
 #root {
     width: 100%;
@@ -23,13 +20,11 @@ body {
     /* Yeh zaroori hai taaki content stars ke upar dikhe */
     position: relative;
     z-index: 2;
-    /* Thoda padding add kar rahe hain taaki content neeche se chipka hua na lage */
-    padding-bottom: 4rem;
 }
 
 
 /* --- STARFIELD ANIMATION (3 Layers) --- */
-/* ... (starfield ka baaki code same rahega) ... */
+/* Layer 1: Chhote, tez stars */
 body::before {
     content: '';
     position: absolute;
@@ -38,10 +33,12 @@ body::before {
     width: 1px;
     height: 1px;
     background: white;
+    /* Stars ki sankhya badha di hai */
     box-shadow: 369px 1318px #FFF, 1331px 1944px #FFF, 839px 1383px #FFF, 128px 1056px #FFF, 1308px 599px #FFF, 808px 439px #FFF, 59px 1581px #FFF, 1428px 1017px #FFF, 1515px 125px #FFF, 1279px 163px #FFF, 1530px 487px #FFF, 342px 1380px #FFF, 1876px 1477px #FFF, 136px 973px #FFF, 1864px 1726px #FFF, 1757px 1136px #FFF, 1833px 1481px #FFF, 1514px 1435px #FFF, 127px 1297px #FFF, 1083px 1865px #FFF, 396px 635px #FFF, 1554px 336px #FFF, 1819px 113px #FFF, 1494px 1157px #FFF, 1334px 1563px #FFF, 518px 108px #FFF, 1422px 174px #FFF, 1140px 143px #FFF, 1394px 316px #FFF;
     animation: animateStars 50s linear infinite;
 }
 
+/* Layer 2: Medium, dheere stars */
 body::after {
     content: '';
     position: absolute;
@@ -50,10 +47,12 @@ body::after {
     width: 2px;
     height: 2px;
     background: white;
+    /* Stars ki sankhya badha di hai */
     box-shadow: 176px 490px #FFF, 153px 12px #FFF, 595px 338px #FFF, 542px 534px #FFF, 48px 175px #FFF, 345px 331px #FFF, 550px 246px #FFF, 482px 421px #FFF, 349px 493px #FFF, 17px 343px #FFF, 962px 1868px #FFF, 1303px 1720px #FFF, 1175px 1146px #FFF, 1184px 576px #FFF, 93px 149px #FFF, 1382px 1222px #FFF, 762px 919px #FFF, 1131px 1916px #FFF;
     animation: animateStars 100s linear infinite;
 }
 
+/* Layer 3: Bade, sabse dheere stars */
 #root::before {
     content: '';
     position: absolute;
@@ -62,7 +61,7 @@ body::after {
     background: white;
     box-shadow: 697px 1430px #FFF, 1746px 1788px #FFF, 1902px 1734px #FFF, 1070px 1618px #FFF, 302px 178px #FFF, 1694px 1340px #FFF;
     animation: animateStars 150s linear infinite;
-    z-index: -1;
+    z-index: -1; /* Taaki yeh content ke peeche rahe */
 }
 
 @keyframes animateStars {
@@ -73,7 +72,9 @@ body::after {
         transform: translateY(-2000px);
     }
 }
-/* ... (baaki ka code waisa hi rahega jaisa pehle tha) ... */
+/* --- STARFIELD END --- */
+
+
 .app-container {
     display: flex;
     flex-direction: column;
@@ -90,6 +91,8 @@ body::after {
     line-height: 1.2;
 }
 
+/* Baaki saare styles waise hi rahenge */
+/* Spinner, Cubes, etc. */
 .spinner-container {
     position: relative;
     width: 340px;
@@ -99,22 +102,162 @@ body::after {
     align-items: center;
 }
 
-/* ... (baaki saara CSS same hai) ... */
-
-
-/* --- FIX FOR SCROLL LAG START --- */
-/* Yeh code mobile par heavy animation band kar dega */
-@media (max-width: 768px) {
-  body::before,
-  body::after,
-  #root::before {
-    /* Animation band kar dega jisse performance behtar hogi */
-    animation: none;
-    /* Chahein to stars ko static rakh sakte hain ya box-shadow: none; karke poora hata sakte hain */
-  }
-
-  .spinner-container {
-    transform: scale(0.9);
-  }
+.spinner-frame {
+    width: 340px;
+    height: 340px;
+    background: #2c3e50;
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 0 10px rgba(0,0,0,0.5);
 }
-/* --- FIX FOR SCROLL LAG END --- */
+
+.spinner-red-layer {
+    width: 320px;
+    height: 320px;
+    background: #c0392b;
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.stud {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #f1c40f;
+    border-radius: 50%;
+    border: 1px solid #333;
+    z-index: 20;
+}
+
+.spinner-pointer {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 30px solid #c0392b;
+    position: absolute;
+    top: -5px;
+    z-index: 25;
+    filter: drop-shadow(0px -2px 1px rgba(0,0,0,0.3));
+}
+
+.spinner-wheel {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    transition: transform 10s cubic-bezier(0.1, 0.9, 0.2, 1);
+    background: conic-gradient(
+        #ff4757 0deg 36deg,
+        #ff7f50 36deg 72deg,
+        #ffa502 72deg 108deg,
+        #2ed573 108deg 144deg,
+        #1e90ff 144deg 180deg,
+        #3742fa 180deg 216deg,
+        #8e44ad 216deg 252deg,
+        #ff6b81 252deg 288deg,
+        #feca57 288deg 324deg,
+        #e84393 324deg 360deg
+    );
+    border: 3px solid #2c3e50;
+}
+
+.value-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.value-text {
+    position: absolute;
+    color: white;
+    font-family: 'Lilita One', cursive;
+    font-size: 22px;
+    font-weight: 400;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    letter-spacing: 1px;
+}
+
+.value-text span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.9;
+}
+.center-spin-button {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 5px solid #2c3e50;
+    cursor: pointer;
+    z-index: 15;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.4), 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.1s ease;
+}
+
+.center-spin-button:active {
+    transform: scale(0.95);
+}
+
+.winner-blocks-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    perspective: 1000px;
+}
+
+.cube {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(-30deg);
+    transition: transform 0.5s;
+}
+.cube:hover {
+    transform: rotateX(-10deg) rotateY(-20deg);
+}
+
+.cube-face {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+    color: #f1c40f;
+    border: 3px solid #f1c40f;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    border-radius: 12px;
+}
+
+.front {
+    background-color: #16a085;
+    transform: translateZ(30px);
+}
+.top {
+    background-color: #1abc9c;
+    transform: rotateX(90deg) translateZ(30px);
+}
+.left {
+    background-color: #1abc9c;
+    transform: rotateY(-90deg) translateZ(30px);
+}
+.right {
+    background-color: #1abc9c;
+    transform: rotateY(90deg) translateZ(30px);
+}
