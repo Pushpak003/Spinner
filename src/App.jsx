@@ -10,9 +10,10 @@ const FINAL_SLOT_RESULT = ['0', '5', '7'];
 function App() {
     const [rotation, setRotation] = useState(0);
     const [isSpinning, setIsSpinning] = useState(false);
-    const [displayNumbers, setDisplayNumbers] = useState(FINAL_SLOT_RESULT);
+    const [displayNumbers, setDisplayNumbers] = useState(['0', '0', '0']);
     
     const intervalIds = useRef([]);
+    const timeoutIds = useRef([]);
     const wheelRef = useRef(null);
 
     useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
 
         const handleSpinStop = () => {
             intervalIds.current.forEach(clearInterval);
+            timeoutIds.current.forEach(clearTimeout);
             setDisplayNumbers(FINAL_SLOT_RESULT);
             setIsSpinning(false);
         };
@@ -28,39 +30,58 @@ function App() {
 
         return () => {
             wheel.removeEventListener('transitionend', handleSpinStop);
+            intervalIds.current.forEach(clearInterval);
+            timeoutIds.current.forEach(clearTimeout);
         };
     }, []);
 
     const spin = () => {
         if (isSpinning) return;
 
-        // --- CHANGE START ---
-        // Yahan logic update kiya hai
-        FINAL_SLOT_RESULT.forEach((_, index) => {
-            intervalIds.current[index] = setInterval(() => {
-                let randomDigit;
-                
-                // Agar pehla cube hai (index === 0), to sirf 0, 1, 2 use karo
-                if (index === 0) {
-                    const firstCubeDigits = ['0', '1', '2'];
-                    const randomIndex = Math.floor(Math.random() * firstCubeDigits.length);
-                    randomDigit = firstCubeDigits[randomIndex];
-                } else {
-                    // Baaki cubes ke liye sabhi digits (0-9) use karo
-                    const randomIndex = Math.floor(Math.random() * DIGITS.length);
-                    randomDigit = DIGITS[randomIndex];
-                }
-                
-                setDisplayNumbers(prev => {
-                    const newNumbers = [...prev];
-                    newNumbers[index] = randomDigit;
-                    return newNumbers;
-                });
-            }, 100);
-        });
-        // --- CHANGE END ---
-        
         setIsSpinning(true);
+
+        const setupNumberAnimation = (delay) => {
+            intervalIds.current.forEach(clearInterval);
+            intervalIds.current = [];
+
+            FINAL_SLOT_RESULT.forEach((_, index) => {
+                const newIntervalId = setInterval(() => {
+                    let randomDigit;
+                    if (index === 0) {
+                        const firstCubeDigits = ['0', '1', '2'];
+                        const randomIndex = Math.floor(Math.random() * firstCubeDigits.length);
+                        randomDigit = firstCubeDigits[randomIndex];
+                    } else {
+                        const randomIndex = Math.floor(Math.random() * DIGITS.length);
+                        randomDigit = DIGITS[randomIndex];
+                    }
+                    
+                    setDisplayNumbers(prev => {
+                        const newNumbers = [...prev];
+                        newNumbers[index] = randomDigit;
+                        return newNumbers;
+                    });
+                }, delay);
+                intervalIds.current.push(newIntervalId);
+            });
+        };
+
+        // 1. Shuru mein fast speed (100ms)
+        setupNumberAnimation(100);
+
+        // 2. 5 seconds ke baad, speed medium kar do (300ms)
+        const mediumSpeedTimeout = setTimeout(() => {
+            setupNumberAnimation(300);
+        }, 5000);
+
+        // 3. 8 seconds ke baad, speed slow kar do
+        const slowSpeedTimeout = setTimeout(() => {
+            // --- CHANGE: Aakhri speed ko 750ms se 500ms kar diya hai (thoda fast) ---
+            setupNumberAnimation(500);
+        }, 8000);
+
+        timeoutIds.current = [mediumSpeedTimeout, slowSpeedTimeout];
+        
         const targetAmount = 2100;
         const targetIndex = SPINNER_AMOUNTS.indexOf(targetAmount);
         const segmentAngle = 360 / SPINNER_AMOUNTS.length;
@@ -89,7 +110,7 @@ function App() {
     const values = useMemo(() => {
         const numValues = SPINNER_AMOUNTS.length;
         const wheelCenter = 150;
-        const textRadius = 95; // Yeh value humne pehle change ki thi
+        const textRadius = 95;
         return SPINNER_AMOUNTS.map((amount, index) => {
             const segmentAngle = 360 / numValues;
             const startAngle = index * segmentAngle;
