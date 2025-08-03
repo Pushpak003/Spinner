@@ -3,9 +3,14 @@ import './App.css';
 import logo from './assets/logo.jpeg';
 
 // Data lists
-const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 const SPINNER_AMOUNTS = [2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900];
 const FINAL_SLOT_RESULT = ['0', '5', '7'];
+
+// --- CHANGE 1: Aapki di hui list se naya array banaya hai ---
+// Saare numbers ko 3-digit string mein convert kar diya hai (e.g., 57 -> "057")
+const rawAnimationNumbers = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 33, 34, 35, 36, 37, 38, 46, 47, 48, 49, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 100, 105, 110, 111, 113, 114, 135, 136, 137, 138, 139, 140, 141, 142, 143, 148, 149, 151, 152, 153, 154, 158, 159, 162, 168, 170, 171, 172, 173, 177, 178, 199, 202, 203, 204, 209, 242, 243, 244, 245, 246, 248, 252, 253, 263, 264];
+const ANIMATION_NUMBERS = rawAnimationNumbers.map(num => String(num).padStart(3, '0'));
+
 
 function App() {
     const [rotation, setRotation] = useState(0);
@@ -37,51 +42,33 @@ function App() {
 
     const spin = () => {
         if (isSpinning) return;
-
         setIsSpinning(true);
 
+        // --- CHANGE 2: Animation ka logic naye array se chalane ke liye update kiya hai ---
         const setupNumberAnimation = (delay) => {
+            // Purana interval clear karo
             intervalIds.current.forEach(clearInterval);
-            intervalIds.current = [];
-
-            FINAL_SLOT_RESULT.forEach((_, index) => {
-                const newIntervalId = setInterval(() => {
-                    let randomDigit;
-                    if (index === 0) {
-                        const firstCubeDigits = ['0', '1', '2'];
-                        const randomIndex = Math.floor(Math.random() * firstCubeDigits.length);
-                        randomDigit = firstCubeDigits[randomIndex];
-                    } else {
-                        const randomIndex = Math.floor(Math.random() * DIGITS.length);
-                        randomDigit = DIGITS[randomIndex];
-                    }
-                    
-                    setDisplayNumbers(prev => {
-                        const newNumbers = [...prev];
-                        newNumbers[index] = randomDigit;
-                        return newNumbers;
-                    });
-                }, delay);
-                intervalIds.current.push(newIntervalId);
-            });
+            
+            // Naya interval set karo jo naye array se random number uthayega
+            const newIntervalId = setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * ANIMATION_NUMBERS.length);
+                const numberString = ANIMATION_NUMBERS[randomIndex]; // e.g., "135"
+                const newDisplayNumbers = numberString.split('');     // ["1", "3", "5"]
+                setDisplayNumbers(newDisplayNumbers);
+            }, delay);
+            
+            // Naye interval ki ID store kar lo
+            intervalIds.current = [newIntervalId];
         };
 
-        // 1. Shuru mein fast speed (100ms)
-        setupNumberAnimation(100);
-
-        // 2. 5 seconds ke baad, speed medium kar do (300ms)
-        const mediumSpeedTimeout = setTimeout(() => {
-            setupNumberAnimation(300);
-        }, 5000);
-
-        // 3. 8 seconds ke baad, speed slow kar do
-        const slowSpeedTimeout = setTimeout(() => {
-            // --- CHANGE: Aakhri speed ko 750ms se 500ms kar diya hai (thoda fast) ---
-            setupNumberAnimation(500);
-        }, 8000);
+        // Speed dheere karne ka logic same rahega
+        setupNumberAnimation(100); // Fast
+        const mediumSpeedTimeout = setTimeout(() => setupNumberAnimation(300), 5000); // Medium
+        const slowSpeedTimeout = setTimeout(() => setupNumberAnimation(500), 8000); // Slow
 
         timeoutIds.current = [mediumSpeedTimeout, slowSpeedTimeout];
         
+        // Wheel ko ghumaane ka logic
         const targetAmount = 2100;
         const targetIndex = SPINNER_AMOUNTS.indexOf(targetAmount);
         const segmentAngle = 360 / SPINNER_AMOUNTS.length;
@@ -95,6 +82,7 @@ function App() {
         setRotation(totalRotation);
     };
 
+    // --- Baaki ka saara code same rahega ---
     const studs = useMemo(() => {
         const numStuds = 12;
         const layerCenter = 160;
