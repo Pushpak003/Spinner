@@ -58,18 +58,15 @@ body::after {
 /* --- STARFIELD END --- */
 
 
-/* --- CHANGE HERE --- */
 .app-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Gap kam kar diya hai taaki elements pass aa jayein */
     gap: 1.5rem;
     width: 100%;
-    /* Upar aur neeche ka padding bhi kam kar diya hai */
-    padding: 1rem 1rem;
+    /* CHANGE: Upar ka padding aur kam kar diya hai */
+    padding: 0.5rem 1rem;
 }
-/* --- CHANGE END --- */
 
 
 .main-title {
@@ -78,7 +75,6 @@ body::after {
     text-shadow: 0 0 7px rgba(255,255,255,0.7), 0 0 21px rgba(82,113,255,0.6);
     text-align: center;
     line-height: 1.2;
-    /* Title ka upar-neeche ka margin bhi kam kar sakte hain */
     margin-top: 0;
     margin-bottom: 0;
 }
