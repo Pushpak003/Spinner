@@ -4,7 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body {
-    /* CHANGE: Browser ka default margin hatane ke liye yeh line add ki hai */
     margin: 0;
     background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
     color: #c9d1d9;
@@ -60,6 +59,8 @@ body::after {
     gap: 0.75rem;
     width: 100%;
     padding: 0 1rem;
+    /* FINAL CHANGE: Sabkuch upar kheechnne ke liye negative margin */
+    margin-top: -1rem;
 }
 
 
