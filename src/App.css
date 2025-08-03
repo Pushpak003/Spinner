@@ -3,21 +3,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-/* --- SCROLL FIX START --- */
 body {
-    /* Naya Gradient Background: dark blue se black */
     background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
     color: #c9d1d9;
-    /* height ko min-height se badal diya taaki body content ke hisaab se grow kar sake */
     min-height: 100vh;
-    /* Sirf horizontal scroll ko roka hai, vertical scroll ab kaam karega */
     overflow-x: hidden;
 }
-/* --- SCROLL FIX END --- */
 
+#root {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
 
-/* --- STARFIELD ANIMATION (3 Layers) --- */
-/* Layer 1: Chhote, tez stars */
+/* --- STARFIELD ANIMATION --- */
 body::before {
     content: '';
     position: absolute;
@@ -28,11 +31,9 @@ body::before {
     background: white;
     box-shadow: 369px 1318px #FFF, 1331px 1944px #FFF, 839px 1383px #FFF, 128px 1056px #FFF, 1308px 599px #FFF, 808px 439px #FFF, 59px 1581px #FFF, 1428px 1017px #FFF, 1515px 125px #FFF, 1279px 163px #FFF, 1530px 487px #FFF, 342px 1380px #FFF, 1876px 1477px #FFF, 136px 973px #FFF, 1864px 1726px #FFF, 1757px 1136px #FFF, 1833px 1481px #FFF, 1514px 1435px #FFF, 127px 1297px #FFF, 1083px 1865px #FFF, 396px 635px #FFF, 1554px 336px #FFF, 1819px 113px #FFF, 1494px 1157px #FFF, 1334px 1563px #FFF, 518px 108px #FFF, 1422px 174px #FFF, 1140px 143px #FFF, 1394px 316px #FFF;
     animation: animateStars 50s linear infinite;
-    /* Stars ko content ke peeche rakhne ke liye */
     z-index: -1;
 }
 
-/* Layer 2: Medium, dheere stars */
 body::after {
     content: '';
     position: absolute;
@@ -43,12 +44,8 @@ body::after {
     background: white;
     box-shadow: 176px 490px #FFF, 153px 12px #FFF, 595px 338px #FFF, 542px 534px #FFF, 48px 175px #FFF, 345px 331px #FFF, 550px 246px #FFF, 482px 421px #FFF, 349px 493px #FFF, 17px 343px #FFF, 962px 1868px #FFF, 1303px 1720px #FFF, 1175px 1146px #FFF, 1184px 576px #FFF, 93px 149px #FFF, 1382px 1222px #FFF, 762px 919px #FFF, 1131px 1916px #FFF;
     animation: animateStars 100s linear infinite;
-    /* Stars ko content ke peeche rakhne ke liye */
     z-index: -1;
 }
-
-/* Layer 3: Bade, sabse dheere stars */
-/* NOTE: Humne #root::before ko hata diya hai kyunki 2 layer stars bhi performance ke liye aachi hai */
 
 @keyframes animateStars {
     from {
@@ -61,27 +58,19 @@ body::after {
 /* --- STARFIELD END --- */
 
 
-#root {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto; /* Center mein lane ke liye */
-    display: flex;
-    justify-content: center;
-    position: relative;
-    z-index: 2;
-}
-
-
+/* --- CHANGE HERE --- */
 .app-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    /* Gap kam kar diya hai taaki elements pass aa jayein */
+    gap: 1.5rem;
     width: 100%;
-    padding: 2rem 1rem; /* Upar-neeche aur side mein thoda space */
+    /* Upar aur neeche ka padding bhi kam kar diya hai */
+    padding: 1rem 1rem;
 }
+/* --- CHANGE END --- */
 
-/* ... Baaki saara code (main-title, spinner-container, etc.) same rahega ... */
 
 .main-title {
     font-size: clamp(1.5rem, 5vw, 2.5rem);
@@ -89,6 +78,9 @@ body::after {
     text-shadow: 0 0 7px rgba(255,255,255,0.7), 0 0 21px rgba(82,113,255,0.6);
     text-align: center;
     line-height: 1.2;
+    /* Title ka upar-neeche ka margin bhi kam kar sakte hain */
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .spinner-container {
@@ -262,18 +254,14 @@ body::after {
     transform: rotateY(90deg) translateZ(30px);
 }
 
-
 /* --- MOBILE PERFORMANCE FIX --- */
-/* Yeh code mobile par heavy animation band kar dega aur spinner ko chota kar dega */
 @media (max-width: 768px) {
   body::before,
   body::after {
-    /* Animation band kar dega jisse performance behtar hogi */
     animation: none;
   }
 
   .spinner-container {
-    /* Spinner ko thoda chota kar dega taaki choti screen par fit ho jaye */
     transform: scale(0.85);
   }
 }
