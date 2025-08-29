@@ -59,10 +59,10 @@ function App() {
             intervalIds.current = [newIntervalId];
         };
 
-        // --- CHANGE: Speed aur timing ko adjust kiya gaya hai ---
+        // --- CHANGE: Speed aur timing ko naye 32-second spin ke liye adjust kiya hai ---
         setupNumberAnimation(50); // Very Fast
-        const mediumSpeedTimeout = setTimeout(() => setupNumberAnimation(150), 15000); // Medium after 15s
-        const slowSpeedTimeout = setTimeout(() => setupNumberAnimation(300), 20000); // Slow after 20s
+        const mediumSpeedTimeout = setTimeout(() => setupNumberAnimation(150), 20000); // Medium after 20s
+        const slowSpeedTimeout = setTimeout(() => setupNumberAnimation(300), 28000); // Slow after 28s
 
         timeoutIds.current = [mediumSpeedTimeout, slowSpeedTimeout];
         
@@ -73,7 +73,7 @@ function App() {
         const randomOffset = Math.random() * (segmentAngle - 10) + 5;
         const targetAngleInWheel = (targetIndex * segmentAngle) + randomOffset;
         const requiredFinalAngle = 360 - targetAngleInWheel;
-        const spins = 360 * 25; // Zyada rotations, taaki lamba spin achha lage
+        const spins = 360 * 35; // Aur zyada rotations, taaki lamba spin achha lage
         const currentAngle = rotation % 360;
         const adjustment = (requiredFinalAngle - currentAngle + 360) % 360;
         const totalRotation = rotation + spins + adjustment;

@@ -86,8 +86,8 @@ body::after {
 .spinner-red-layer{width:320px;height:320px;background:#c0392b;position:absolute;display:flex;justify-content:center;align-items:center;box-shadow:inset 0 0 10px rgba(0,0,0,.5)}
 .stud{position:absolute;width:10px;height:10px;background:#f1c40f;border-radius:50%;border:1px solid #333;z-index:20}
 .spinner-pointer{width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-top:30px solid #c0392b;position:absolute;top:-5px;z-index:25;filter:drop-shadow(0px -2px 1px rgba(0,0,0,0.3))}
-/* --- CHANGE: Spin duration 10s se 22s kar di hai --- */
-.spinner-wheel{width:300px;height:300px;border-radius:50%;position:relative;overflow:hidden;transition:transform 22s cubic-bezier(0.1, 0.9, 0.2, 1);background:conic-gradient(#ff4757 0deg 36deg,#ff7f50 36deg 72deg,#ffa502 72deg 108deg,#2ed573 108deg 144deg,#1e90ff 144deg 180deg,#3742fa 180deg 216deg,#8e44ad 216deg 252deg,#ff6b81 252deg 288deg,#feca57 288deg 324deg,#e84393 324deg 360deg);border:3px solid #2c3e50}
+/* --- CHANGE: Spin duration 22s se 32s kar di hai --- */
+.spinner-wheel{width:300px;height:300px;border-radius:50%;position:relative;overflow:hidden;transition:transform 32s cubic-bezier(0.1, 0.9, 0.2, 1);background:conic-gradient(#ff4757 0deg 36deg,#ff7f50 36deg 72deg,#ffa502 72deg 108deg,#2ed573 108deg 144deg,#1e90ff 144deg 180deg,#3742fa 180deg 216deg,#8e44ad 216deg 252deg,#ff6b81 252deg 288deg,#feca57 288deg 324deg,#e84393 324deg 360deg);border:3px solid #2c3e50}
 .value-container{width:100%;height:100%;position:absolute;top:0;left:0}
 .value-text{position:absolute;color:#fff;font-family:'Lilita One',cursive;font-size:22px;font-weight:400;text-shadow:1px 1px 2px rgba(0,0,0,.8);letter-spacing:1px}
 .value-text span{display:flex;flex-direction:column;align-items:center;line-height:.9}
