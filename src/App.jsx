@@ -6,7 +6,6 @@ import logo from './assets/logo.jpeg';
 const SPINNER_AMOUNTS = [2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900];
 const FINAL_SLOT_RESULT = ['1', '1', '1'];
 
-// --- CHANGE 1: Aapki di hui list se naya array banaya hai ---
 // Saare numbers ko 3-digit string mein convert kar diya hai (e.g., 57 -> "057")
 const rawAnimationNumbers = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 33, 34, 35, 36, 37, 38, 46, 47, 48, 49, 52, 53, 54, 55, 56, 58, 59, 60, 61, 62, 63, 100, 105, 110, 111, 113, 114, 135, 136, 137, 138, 139, 140, 141, 142, 143, 148, 149, 151, 152, 153, 154, 158, 159, 162, 168, 170, 171, 172, 173, 177, 178, 199, 202, 203, 204, 209, 242, 243, 244, 245, 246, 248, 252, 253, 263, 264];
 const ANIMATION_NUMBERS = rawAnimationNumbers.map(num => String(num).padStart(3, '0'));
@@ -44,7 +43,6 @@ function App() {
         if (isSpinning) return;
         setIsSpinning(true);
 
-        // --- CHANGE 2: Animation ka logic naye array se chalane ke liye update kiya hai ---
         const setupNumberAnimation = (delay) => {
             // Purana interval clear karo
             intervalIds.current.forEach(clearInterval);
@@ -61,10 +59,10 @@ function App() {
             intervalIds.current = [newIntervalId];
         };
 
-        // Speed dheere karne ka logic same rahega
-        setupNumberAnimation(100); // Fast
-        const mediumSpeedTimeout = setTimeout(() => setupNumberAnimation(300), 5000); // Medium
-        const slowSpeedTimeout = setTimeout(() => setupNumberAnimation(500), 8000); // Slow
+        // --- CHANGE: Speed aur timing ko adjust kiya gaya hai ---
+        setupNumberAnimation(50); // Very Fast
+        const mediumSpeedTimeout = setTimeout(() => setupNumberAnimation(150), 15000); // Medium after 15s
+        const slowSpeedTimeout = setTimeout(() => setupNumberAnimation(300), 20000); // Slow after 20s
 
         timeoutIds.current = [mediumSpeedTimeout, slowSpeedTimeout];
         
@@ -75,14 +73,13 @@ function App() {
         const randomOffset = Math.random() * (segmentAngle - 10) + 5;
         const targetAngleInWheel = (targetIndex * segmentAngle) + randomOffset;
         const requiredFinalAngle = 360 - targetAngleInWheel;
-        const spins = 360 * 10;
+        const spins = 360 * 25; // Zyada rotations, taaki lamba spin achha lage
         const currentAngle = rotation % 360;
         const adjustment = (requiredFinalAngle - currentAngle + 360) % 360;
         const totalRotation = rotation + spins + adjustment;
         setRotation(totalRotation);
     };
 
-    // --- Baaki ka saara code same rahega ---
     const studs = useMemo(() => {
         const numStuds = 12;
         const layerCenter = 160;
