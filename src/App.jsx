@@ -67,7 +67,7 @@ function App() {
         timeoutIds.current = [mediumSpeedTimeout, slowSpeedTimeout];
         
         // Wheel ko ghumaane ka logic
-        const targetAmount = 2400;
+        const targetAmount = 2000;
         const targetIndex = SPINNER_AMOUNTS.indexOf(targetAmount);
         const segmentAngle = 360 / SPINNER_AMOUNTS.length;
         const randomOffset = Math.random() * (segmentAngle - 10) + 5;
